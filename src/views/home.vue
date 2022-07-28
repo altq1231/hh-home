@@ -1,0 +1,81 @@
+<template>
+  <div class="home-page flex-col">home</div>
+</template>
+
+<script>
+import { reactive } from "vue";
+import {
+  MenuOutlined,
+  FileAddOutlined,
+  FrownOutlined,
+  FolderOutlined,
+} from "@ant-design/icons-vue";
+import { GlobalStore } from "/@/store/common";
+import { storeToRefs } from "pinia";
+
+export default {
+  name: "Home",
+  components: {
+    MenuOutlined,
+    FileAddOutlined,
+    FrownOutlined,
+    FolderOutlined,
+  },
+  setup() {
+    const isBomb = reactive({ value: false });
+
+    const globalStore = GlobalStore();
+    const { pageData, absoluteData } = storeToRefs(globalStore);
+
+    console.log(absoluteData);
+
+    const handleLoad = (data) => {};
+    const handleClick = () => {};
+    const dragover = (e) => {
+      // console.log("home------------", e);
+      e.preventDefault();
+    };
+
+    const handleAbsoluteData = (aData) => {
+      console.log(aData);
+      return JSON.stringify(aData);
+    };
+    return {
+      isBomb,
+      handleLoad,
+      handleClick,
+      dragover,
+      pageData,
+      absoluteData,
+      handleAbsoluteData,
+    };
+  },
+};
+</script>
+<style scoped lang="less">
+.home-page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // background-color: #000000;
+  // color: #ffffff;
+
+  .box-wrapper {
+    flex-wrap: wrap;
+
+    .flex-item {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 18px;
+      text-align: center;
+      line-height: 32px;
+
+      &:hover {
+        background-color: @primary-color;
+      }
+    }
+  }
+}
+</style>
