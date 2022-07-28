@@ -26,8 +26,6 @@ export default {
     //router是全局路由对象，route= userRoute()是当前路由对象
     let router = useRouter();
 
-    console.log(router.currentRoute.value.meta);
-
     if (router.currentRoute.value.meta.hideHeader) {
       hideHead.value = true;
     } else {
