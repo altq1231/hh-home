@@ -1,6 +1,10 @@
 <template>
   <div class="basic-layout">
-    <div class="layout-header container-wrapper">
+    <a-space class="route-link">
+      <router-link to="/">home</router-link>
+      <router-link to="/test">test</router-link>
+    </a-space>
+    <div class="layout-header container-wrapper" v-if="!hideHead">
       <div class="header-container container flex-row">header</div>
     </div>
     <div class="bottom-main-container container-wrapper">
@@ -12,15 +16,24 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs } from "vue";
+import { ref, reactive, toRefs, watch } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   setup() {
     const username = ref("admin");
-
+    const hideHead = ref(false);
     //router是全局路由对象，route= userRoute()是当前路由对象
     let router = useRouter();
+
+    console.log(router.currentRoute.value.meta);
+
+    if (router.currentRoute.value.meta.hideHeader) {
+      hideHead.value = true;
+    } else {
+      hideHead.value = false;
+    }
+
     const logout = () => {
       sessionStorage.removeItem("jwt");
       router.push({
@@ -41,15 +54,20 @@ export default {
     });
 
     router.beforeEach((to, from) => {
-      if (to.meta.index > from.meta.index) {
-        console.log(1);
-        state.transitionName = "slide-left"; // 向左滑动
-      } else if (to.meta.index < from.meta.index) {
-        // 由次级到主级
-        console.log(2);
-        state.transitionName = "slide-right";
+      // if (to.meta.index > from.meta.index) {
+      //   console.log(1);
+      //   state.transitionName = "slide-left"; // 向左滑动
+      // } else if (to.meta.index < from.meta.index) {
+      //   // 由次级到主级
+      //   console.log(2);
+      //   state.transitionName = "slide-right";
+      // } else {
+      //   state.transitionName = ""; // 同级无过渡效果
+      // }
+      if (to.meta.hideHeader) {
+        hideHead.value = true;
       } else {
-        state.transitionName = ""; // 同级无过渡效果
+        hideHead.value = false;
       }
     });
 
@@ -57,6 +75,7 @@ export default {
       username,
       goToPage,
       logout,
+      hideHead,
       ...toRefs(state),
     };
   },
@@ -67,6 +86,13 @@ export default {
 .basic-layout {
   width: 100%;
   height: 100%;
+
+  .route-link {
+    position: fixed;
+    top: 120px;
+    left: 40px;
+    z-index: 100000;
+  }
   .layout-header {
     position: sticky;
     width: 100%;

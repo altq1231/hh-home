@@ -42,7 +42,7 @@ export default {
       width: 240,
     });
 
-    function handleMouseDown(elem) {
+    const handleMouseDown = (elem) => {
       console.log(elem.target.parentNode.offsetLeft);
       if (elem.preventDefault) {
         elem.preventDefault();
@@ -64,7 +64,7 @@ export default {
         document.onmouseup = null;
       };
       return false;
-    }
+    };
 
     const handleReset = () => {
       curStyle.width = 240;
@@ -81,7 +81,7 @@ export default {
 </script>
 <style scoped lang="less">
 .test-page {
-  height: 100%;
+  height: 100vh;
   overflow: hidden;
 }
 .top-header {

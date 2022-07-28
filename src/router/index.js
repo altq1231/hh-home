@@ -17,7 +17,10 @@ const routes = [
       {
         path: "/test",
         name: "Test",
-        meta: { title: "Test" },
+        meta: {
+          hideHeader: true,
+          title: "Test",
+        },
         component: () => import("/@/views/test.vue"),
       },
     ],
