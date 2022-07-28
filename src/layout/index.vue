@@ -5,9 +5,7 @@
     </div>
     <div class="bottom-main-container container-wrapper">
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <component :is="Component" :key="$route.name" />
-        </keep-alive>
+        <component :is="Component" />
       </router-view>
     </div>
   </div>

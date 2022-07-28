@@ -1,14 +1,14 @@
 <template>
-  <div class="home-page flex-col">
+  <div class="home-page">
     home
-    <a-button type="primary" @click="handleClick"> 测试</a-button>
+    <a-button type="primary" @click="handleClick"> {{ title }}</a-button>
   </div>
 </template>
 
 <script>
 // // @ts-ignore：无法被执行的代码的错误
 import NProgress from "nprogress";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import {
   MenuOutlined,
   FileAddOutlined,
@@ -28,11 +28,12 @@ export default {
   },
   setup() {
     const isBomb = reactive({ value: false });
+    const title = ref("test  sa aa");
 
     const globalStore = GlobalStore();
     const { pageData, absoluteData } = storeToRefs(globalStore);
 
-    console.log(absoluteData);
+    console.log(title.value);
 
     const handleLoad = (data) => {};
     const dragover = (e) => {
@@ -56,6 +57,7 @@ export default {
       pageData,
       absoluteData,
       handleAbsoluteData,
+      title,
     };
   },
 };

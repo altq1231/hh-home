@@ -5,4 +5,7 @@ import router from "/@/router/index";
 import pinia from "/@/store/index";
 import "/@/style/global.less";
 
-createApp(App).use(Antd).use(router).use(pinia).mount("#app");
+const app = createApp(App);
+// console.log(app.config);
+
+app.use(Antd).use(router).use(pinia).mount("#app");
