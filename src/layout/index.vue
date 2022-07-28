@@ -39,12 +39,11 @@
             </svg>
           </router-link>
         </div>
-        <a-select ref="select" style="width: 120px">
-          <a-select-option value="jack">Jack</a-select-option>
-          <a-select-option value="lucy">Lucy</a-select-option>
-          <a-select-option value="disabled" disabled>Disabled</a-select-option>
-          <a-select-option value="Yiminghe">yiminghe</a-select-option>
-        </a-select>
+        <nav class="login-box flex-row">
+          <a class="user-name">{{ username || "登录" }}</a>
+          <span class="center-line">|</span>
+          <a class="user-name">{{ username ? "退出" : "注册" }}</a>
+        </nav>
       </div>
     </div>
     <div class="bottom-main-container container-wrapper">
@@ -61,7 +60,7 @@ import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const username = ref("admin");
+    const username = ref("");
     const hideHead = ref(false);
     //router是全局路由对象，route= userRoute()是当前路由对象
     let router = useRouter();
@@ -160,6 +159,33 @@ export default {
           svg {
             height: 100%;
           }
+        }
+      }
+
+      .login-box {
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+
+        .user-name {
+          font-size: 14px;
+          line-height: 24px;
+          color: @text-color;
+          max-width: 75px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+          font-weight: 400;
+
+          &:hover {
+            color: @primary-color;
+          }
+        }
+
+        .center-line {
+          font-size: 14px;
+          margin: 0 25px;
         }
       }
     }

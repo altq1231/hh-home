@@ -1,14 +1,28 @@
 @import "./theme.less"; // 用于覆盖上面定义的变量
 @import "./init.less"; // 用于覆盖上面定义的变量
+
+@font-face {
+  font-family: PuHuiRegular;
+  src: url("../assets/fonts/AlibabaPuHuiTi-2-55-Regular.otf");
+}
+@font-face {
+  font-family: PuHuiMedium;
+  src: url("../assets/fonts/AlibabaPuHuiTi-2-65-Medium.otf");
+}
+@font-face {
+  font-family: PuHuiSemiBold;
+  src: url("../assets/fonts/AlibabaPuHuiTi-2-75-SemiBold.otf");
+}
+
 html,
 body,
 #app,
 .app-vue {
   background-color: #fafafa;
   color: #333333;
-  font-family: Roboto Slab, sans-serif, Arial, Helvetica;
+  font-family: PuHuiRegular, Roboto Slab, sans-serif, Arial, Helvetica;
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 // * {
