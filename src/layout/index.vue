@@ -1,6 +1,9 @@
 <template>
-  <div class="flex-col basic-layout">
-    <div class="fill-flex bottom-main-container">
+  <div class="basic-layout">
+    <div class="layout-header container-wrapper">
+      <div class="header-container container flex-row">header</div>
+    </div>
+    <div class="bottom-main-container container-wrapper">
       <router-view v-slot="{ Component }">
         <keep-alive>
           <component :is="Component" :key="$route.name" />
@@ -73,14 +76,13 @@ export default {
     left: 0;
     right: 0;
     z-index: 100;
-    height: 2.5rem;
-    position: sticky;
-    top: 0;
+    height: 65px;
     color: @text-color;
-    background: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.2);
     -webkit-backdrop-filter: saturate(180%) blur(1rem);
     backdrop-filter: saturate(180%) blur(1rem);
     overflow: hidden;
+    transition: background-color 0.5s ease;
 
     .header-container {
       align-items: center;

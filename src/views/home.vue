@@ -1,8 +1,13 @@
 <template>
-  <div class="home-page flex-col">home</div>
+  <div class="home-page flex-col">
+    home
+    <a-button type="primary" @click="handleClick"> 测试</a-button>
+  </div>
 </template>
 
 <script>
+// // @ts-ignore：无法被执行的代码的错误
+import NProgress from "nprogress";
 import { reactive } from "vue";
 import {
   MenuOutlined,
@@ -30,7 +35,6 @@ export default {
     console.log(absoluteData);
 
     const handleLoad = (data) => {};
-    const handleClick = () => {};
     const dragover = (e) => {
       // console.log("home------------", e);
       e.preventDefault();
@@ -39,6 +43,10 @@ export default {
     const handleAbsoluteData = (aData) => {
       console.log(aData);
       return JSON.stringify(aData);
+    };
+
+    const handleClick = () => {
+      NProgress.set(0.5);
     };
     return {
       isBomb,
