@@ -203,7 +203,7 @@ watch(
     transition: background-color 0.5s ease;
 
     &.fixed-header {
-      background-color: rgba(0, 0, 0, 0.85);
+      background-color: rgba(0, 0, 0, 0.65);
       -webkit-backdrop-filter: saturate(180%) blur(1rem);
       backdrop-filter: saturate(180%) blur(1rem);
     }
