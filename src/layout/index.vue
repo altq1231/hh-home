@@ -203,7 +203,7 @@ watch(
     transition: background-color 0.5s ease;
 
     &.fixed-header {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(0, 0, 0, 0.85);
       -webkit-backdrop-filter: saturate(180%) blur(1rem);
       backdrop-filter: saturate(180%) blur(1rem);
     }
@@ -236,7 +236,7 @@ watch(
           }
 
           a {
-            color: @text-color;
+            color: #ffffff;
             font-size: 18px;
             transition: color 0.3s;
 
@@ -257,11 +257,12 @@ watch(
         height: 100%;
         align-items: center;
         justify-content: center;
+        color: #ffffff;
 
         .user-name {
           font-size: 14px;
           line-height: 24px;
-          color: @text-color;
+          color: #ffffff;
           max-width: 75px;
           overflow: hidden;
           text-overflow: ellipsis;

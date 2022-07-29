@@ -1,8 +1,14 @@
 <template>
   <div class="home-page">
-    home
-    <a-button type="primary" @click="handleClick"> {{ title }}</a-button>
-    <div class="test-div"></div>
+    <div class="banner-container">
+      <video
+        class="banner"
+        autoplay
+        muted
+        loop
+        src="../assets/video/2133262552.mp4"
+      ></video>
+    </div>
   </div>
 </template>
 
@@ -66,16 +72,20 @@ export default {
 <style scoped lang="less">
 .home-page {
   width: 100%;
-  height: 100%;
   overflow: hidden;
-  height: 1500px;
-  // background-color: #000000;
-  // color: #ffffff;
   .test-div {
     width: 200px;
     height: 1600px;
     margin-left: 250px;
     background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  }
+
+  .banner-container {
+    width: 100%;
+
+    .banner {
+      width: 100%;
+    }
   }
 
   .box-wrapper {
