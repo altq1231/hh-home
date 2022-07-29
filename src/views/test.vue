@@ -109,13 +109,21 @@ export default {
       position: absolute;
       right: 0;
       top: 0;
-      width: 6px;
+      width: 10px;
       height: 100%;
-      margin-right: -3px;
+      margin-right: -5px;
 
-      &:hover {
+      &:hover,
+      &:active,
+      &:focus {
         cursor: ew-resize;
-        background-color: @primary-color;
+        background: linear-gradient(
+          90deg,
+          transparent calc(50% - 1px),
+          @primary-color calc(50% - 1px),
+          @primary-color calc(50% + 1px),
+          transparent calc(50% + 1px)
+        );
       }
     }
   }

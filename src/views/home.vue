@@ -2,6 +2,7 @@
   <div class="home-page">
     home
     <a-button type="primary" @click="handleClick"> {{ title }}</a-button>
+    <div class="test-div"></div>
   </div>
 </template>
 
@@ -67,8 +68,15 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  height: 1500px;
   // background-color: #000000;
   // color: #ffffff;
+  .test-div {
+    width: 200px;
+    height: 1600px;
+    margin-left: 250px;
+    background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%);
+  }
 
   .box-wrapper {
     flex-wrap: wrap;

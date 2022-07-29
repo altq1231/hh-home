@@ -1,10 +1,10 @@
 <template>
   <div class="basic-layout">
-    <a-space class="route-link">
-      <router-link to="/">home</router-link>
-      <router-link to="/test">test</router-link>
-    </a-space>
-    <div class="layout-header container-wrapper" v-if="!hideHead">
+    <div
+      class="layout-header container-wrapper"
+      v-if="!hideHead"
+      :class="{ 'fixed-header': fixedHeader }"
+    >
       <div class="header-container container flex-row">
         <div class="logo flex-row">
           <router-link to="/" class="logo-link">
@@ -39,6 +39,14 @@
             </svg>
           </router-link>
         </div>
+        <nav class="nav-menu flex-row fill-flex">
+          <div class="menu-item">
+            <router-link to="/">商城</router-link>
+          </div>
+          <div class="menu-item">
+            <router-link to="/">个人中心</router-link>
+          </div>
+        </nav>
         <nav class="login-box flex-row">
           <a class="user-name">{{ username || "登录" }}</a>
           <span class="center-line">|</span>
@@ -52,103 +60,157 @@
       </router-view>
     </div>
   </div>
+  <a-button @click="drawerVisible = !drawerVisible" class="route-link">
+    <template #icon><setting-two-tone two-tone-color="#0a7aff" /></template>
+  </a-button>
+  <a-drawer
+    v-model:visible="drawerVisible"
+    class="custom-class"
+    title="Config"
+    placement="right"
+  >
+    <a-space>
+      <router-link to="/">home</router-link>
+      <router-link to="/test">test</router-link>
+    </a-space>
+  </a-drawer>
 </template>
 
-<script>
-import { ref, reactive, toRefs, watch } from "vue";
+<script lang="ts" setup>
+import {
+  ref,
+  reactive,
+  onMounted,
+  onBeforeUnmount,
+  nextTick,
+  toRefs,
+  watch,
+} from "vue";
 import { useRouter } from "vue-router";
+import { SettingTwoTone } from "@ant-design/icons-vue";
 
-export default {
-  setup() {
-    const username = ref("");
-    const hideHead = ref(false);
-    //router是全局路由对象，route= userRoute()是当前路由对象
-    let router = useRouter();
+const username = ref("");
+const hideHead = ref(false);
+const drawerVisible = ref(false);
+const fixedHeader = ref(false);
+//router是全局路由对象，route= userRoute()是当前路由对象
+let router = useRouter();
 
-    if (router.currentRoute.value.meta.hideHeader) {
-      hideHead.value = true;
-    } else {
-      hideHead.value = false;
-    }
+if (router.currentRoute.value.meta.hideHeader) {
+  hideHead.value = true;
+} else {
+  hideHead.value = false;
+}
 
-    const logout = () => {
-      sessionStorage.removeItem("jwt");
-      router.push({
-        //传递参数使用query的话，指定path或者name都行，但使用params的话，只能使用name指定
-        path: "/login",
-      });
-    };
-
-    const goToPage = (path) => {
-      router.push({
-        //传递参数使用query的话，指定path或者name都行，但使用params的话，只能使用name指定
-        path: path,
-      });
-    };
-
-    const state = reactive({
-      transitionName: "slide-left",
-    });
-
-    router.beforeEach((to, from) => {
-      // if (to.meta.index > from.meta.index) {
-      //   console.log(1);
-      //   state.transitionName = "slide-left"; // 向左滑动
-      // } else if (to.meta.index < from.meta.index) {
-      //   // 由次级到主级
-      //   console.log(2);
-      //   state.transitionName = "slide-right";
-      // } else {
-      //   state.transitionName = ""; // 同级无过渡效果
-      // }
-      if (to.meta.hideHeader) {
-        hideHead.value = true;
-      } else {
-        hideHead.value = false;
-      }
-    });
-
-    return {
-      username,
-      goToPage,
-      logout,
-      hideHead,
-      ...toRefs(state),
-    };
-  },
+const logout = () => {
+  sessionStorage.removeItem("jwt");
+  router.push({
+    //传递参数使用query的话，指定path或者name都行，但使用params的话，只能使用name指定
+    path: "/login",
+  });
 };
+
+const goToPage = (path: string) => {
+  router.push({
+    //传递参数使用query的话，指定path或者name都行，但使用params的话，只能使用name指定
+    path: path,
+  });
+};
+
+const state = reactive({
+  transitionName: "slide-left",
+});
+
+router.beforeEach((to, from) => {
+  // if (to.meta.index > from.meta.index) {
+  //   console.log(1);
+  //   state.transitionName = "slide-left"; // 向左滑动
+  // } else if (to.meta.index < from.meta.index) {
+  //   // 由次级到主级
+  //   console.log(2);
+  //   state.transitionName = "slide-right";
+  // } else {
+  //   state.transitionName = ""; // 同级无过渡效果
+  // }
+  if (to.meta.hideHeader) {
+    hideHead.value = true;
+  } else {
+    hideHead.value = false;
+  }
+});
+let oldScrollTop: number = 0; // 记录上一次滚动结束后的滚动距离
+const scrollTop = ref<number>(0); // 记录当前的滚动距离
+const scrollFixedStatus = ref<boolean>(true);
+
+const handleScroll = () => {
+  window.addEventListener("scroll", () => {
+    scrollTop.value = window.scrollY;
+    if (scrollTop.value >= 65) {
+      fixedHeader.value = true;
+    } else {
+      fixedHeader.value = false;
+    }
+    console.log(fixedHeader.value);
+  });
+};
+onMounted(() => {
+  handleScroll();
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", () => {}); // 离开当前组件别忘记移除事件监听
+});
+watch(
+  () => scrollTop.value,
+
+  (newValue, oldValue) => {
+    setTimeout(() => {
+      if (newValue === window.scrollY) {
+        // 延时执行后当newValue等于window.scrollY，代表滚动结束
+        console.log("滚动结束");
+        oldScrollTop = newValue; // 每次滚动结束后都要给oldScrollTop赋值
+        // scrollFixedStatus.value = true;
+      }
+    }, 20); // 必须使用延时器，否则每次newValue和window.scrollY都相等，无法判断，20ms刚好大于watch的侦听周期，故延时20ms
+    if (oldScrollTop === oldValue) {
+      scrollFixedStatus.value = false;
+      // 每次滚动开始时oldScrollTop与oldValue相等
+      console.log("滚动开始");
+    }
+  }
+);
 </script>
 
 <style lang="less" scoped>
+.route-link {
+  position: fixed;
+  top: 60px;
+  right: 2px;
+  z-index: 500;
+}
 .basic-layout {
   width: 100%;
   height: 100%;
-
-  .route-link {
-    position: fixed;
-    top: 120px;
-    left: 40px;
-    z-index: 100000;
-  }
   .layout-header {
-    position: sticky;
-    width: 100%;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 100;
+    width: 100%;
     height: 65px;
     color: @text-color;
-    background-color: rgba(255, 255, 255, 0.2);
-    -webkit-backdrop-filter: saturate(180%) blur(1rem);
-    backdrop-filter: saturate(180%) blur(1rem);
     overflow: hidden;
     transition: background-color 0.5s ease;
+
+    &.fixed-header {
+      background-color: rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: saturate(180%) blur(1rem);
+      backdrop-filter: saturate(180%) blur(1rem);
+    }
     .header-container {
       height: 100%;
       position: relative;
       align-items: center;
-      justify-content: space-between;
       .logo {
         align-items: center;
         justify-content: center;
@@ -158,6 +220,35 @@ export default {
 
           svg {
             height: 100%;
+          }
+        }
+      }
+
+      .nav-menu {
+        margin: 0 100px;
+        .menu-item {
+          &:nth-child(n + 2) {
+            margin-left: 25px;
+          }
+
+          &:nth-last-child(n + 2) {
+            margin-right: 25px;
+          }
+
+          a {
+            color: @text-color;
+            font-size: 18px;
+            transition: color 0.3s;
+
+            &:hover {
+              color: @primary-color;
+            }
+          }
+
+          &.active {
+            a {
+              color: @primary-color;
+            }
           }
         }
       }

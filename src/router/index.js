@@ -23,6 +23,15 @@ const routes = [
         },
         component: () => import("/@/views/test.vue"),
       },
+      {
+        path: "/test1",
+        name: "Test1",
+        meta: {
+          hideHeader: true,
+          title: "Test1",
+        },
+        component: () => import("/@/views/test1.vue"),
+      },
     ],
   },
   // {
