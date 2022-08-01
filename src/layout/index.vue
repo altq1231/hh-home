@@ -59,21 +59,21 @@
         <component :is="Component" />
       </router-view>
     </div>
+    <a-button @click="drawerVisible = !drawerVisible" class="route-link">
+      <template #icon><setting-two-tone two-tone-color="#0a7aff" /></template>
+    </a-button>
+    <a-drawer
+      v-model:visible="drawerVisible"
+      class="custom-class"
+      title="Config"
+      placement="right"
+    >
+      <a-space>
+        <router-link to="/">home</router-link>
+        <router-link to="/test">test</router-link>
+      </a-space>
+    </a-drawer>
   </div>
-  <a-button @click="drawerVisible = !drawerVisible" class="route-link">
-    <template #icon><setting-two-tone two-tone-color="#0a7aff" /></template>
-  </a-button>
-  <a-drawer
-    v-model:visible="drawerVisible"
-    class="custom-class"
-    title="Config"
-    placement="right"
-  >
-    <a-space>
-      <router-link to="/">home</router-link>
-      <router-link to="/test">test</router-link>
-    </a-space>
-  </a-drawer>
 </template>
 
 <script lang="ts" setup>
