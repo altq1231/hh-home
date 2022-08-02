@@ -32,6 +32,33 @@ const routes = [
         },
         component: () => import("/@/views/test1.vue"),
       },
+      {
+        path: "/shop",
+        name: "shop",
+        meta: {
+          hideHeader: true,
+          title: "商城",
+        },
+        component: () => import("/@/views/shop/index.vue"),
+      },
+      {
+        path: "/music",
+        name: "music",
+        meta: {
+          hideHeader: true,
+          title: "音乐室",
+        },
+        component: () => import("/@/views/music/index.vue"),
+      },
+      {
+        path: "/video",
+        name: "video",
+        meta: {
+          hideHeader: true,
+          title: "放映室",
+        },
+        component: () => import("/@/views/video/index.vue"),
+      },
     ],
   },
   // {

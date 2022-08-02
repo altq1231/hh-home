@@ -2,7 +2,9 @@
   <div class="basic-layout">
     <div class="bottom-main-container container-wrapper">
       <router-view v-slot="{ Component }">
-        <component :is="Component" />
+        <transition name="fade" mode="out-in" appear>
+          <component :is="Component" />
+        </transition>
       </router-view>
     </div>
     <a-button @click="drawerVisible = !drawerVisible" class="route-link">

@@ -1,9 +1,9 @@
 <template>
-  <div class="shop-page flex-col">shop</div>
+  <div class="login-page flex-col">login</div>
 </template>
 
 <script lang="ts" setup></script>
 <style scoped lang="less">
-.shop-page {
+.login-page {
 }
 </style>
