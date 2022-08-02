@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page container-wrapper">
     <Head></Head>
     <div class="banner-container">
       <video
